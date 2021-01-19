@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+    <title>Flask + Vue</title>
+  </head>
+
+  <body>
+    <div id="app" v-cloak>
+      <input v-model.lazy.trim="name" type="text">
+      <button type="button" @click="addSite">Add</button>
+      <ul>
+        <li v-for="site in sites" :key="site.id">
+          <span>${ site.id }: </span>
+          <span>${ site.name }</span>
+        </li>
+      </ul>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      var app = new Vue({
+        el: '#app',
+        data: {
+          name: '',
+          user: '{{ g.user }}',
+          sites: {{ sites|tojson }}
+        },
+        delimiters: ['${', '}'],
+        methods: {
+          async addSite () {
+            var res = await axios.post('/api/sites', {name: this.name})
+            this.sites.push(res.data)
+            this.name = ''
+          }
+        }
+      })
+    </script>
+  </body>
+</html>
