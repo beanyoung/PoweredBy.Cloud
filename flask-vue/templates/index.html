@@ -33,7 +33,7 @@
         delimiters: ['${', '}'],
         methods: {
           async addSite () {
-            var res = await axios.post('/api/sites', {name: this.name})
+            var res = await axios.post('/api/sites', {name: this.siteName})
             this.sites.push(res.data)
             this.siteName= ''
           }
