@@ -8,7 +8,8 @@
 
   <body>
     <div id="app" v-cloak>
-      <input v-model.lazy.trim="name" type="text">
+      <h2>Hello, ${ user }</h2>
+      <input v-model.lazy.trim="siteName" type="text">
       <button type="button" @click="addSite">Add</button>
       <ul>
         <li v-for="site in sites" :key="site.id">
@@ -25,7 +26,7 @@
       var app = new Vue({
         el: '#app',
         data: {
-          name: '',
+          siteName: '',
           user: '{{ g.user }}',
           sites: {{ sites|tojson }}
         },
@@ -34,7 +35,7 @@
           async addSite () {
             var res = await axios.post('/api/sites', {name: this.name})
             this.sites.push(res.data)
-            this.name = ''
+            this.siteName= ''
           }
         }
       })
